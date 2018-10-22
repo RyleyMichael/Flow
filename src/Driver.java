@@ -20,7 +20,7 @@ public class Driver {
         try
         {
             //opens the file
-            Scanner fileRead = new Scanner(new FileReader("10x10maze.txt"));
+            Scanner fileRead = new Scanner(new FileReader("5x5maze.txt"));
 
             //counter to represent the inner array list
             int i = 0;
@@ -52,17 +52,20 @@ public class Driver {
 
         //convert the array list to a 2d char array and print it
         Array array = new Array();
-        char[][] openPuzzle = array.convert(puzzle);
+        Node[][] openPuzzle = array.convert(puzzle);
         System.out.println("\nOriginal Puzzle");
         array.print(openPuzzle);
 
         //find the starting Node in the puzzle
         Node start = array.findStart(openPuzzle);
-        System.out.print("\nStarting node is " + start);
+        System.out.println("\nStarting node is " + start);
 
-        //solve the puzzle using simple backtracking i.e. dumb approach
+        //print all dot locations in the puzzle
+        array.printDots(openPuzzle);
+
+        //solve the puzzle using dumb backtracking i.e. no heuristic
 
 
-        //solve the puzzle using backtracking with the help of some heuristic function
+        //solve the puzzle using smart backtracking i.e. with some heuristic
     }
 }

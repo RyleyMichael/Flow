@@ -7,15 +7,17 @@ public class Node
     //instance variables
     private int rowCord;
     private int colCord;
+    private char symbol;
     private boolean dot; //a dot is a starting/ending point in the maze
 
     /**
      * Constructor
      */
-    public Node(int rowCord, int colCord)
+    public Node(int rowCord, int colCord, char symbol)
     {
         this.rowCord = rowCord;
         this.colCord = colCord;
+        this.symbol = symbol;
     }
 
     /**
@@ -25,6 +27,15 @@ public class Node
     public String toString()
     {
         return "(" + rowCord + ", " + colCord + ")";
+    }
+
+    /**
+     * Method to return the symbol of a Node
+     * @return the symbol as a character
+     */
+    public char getSymbol()
+    {
+        return symbol;
     }
 
     /**

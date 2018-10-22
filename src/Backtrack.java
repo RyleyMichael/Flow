@@ -12,6 +12,11 @@ public class Backtrack
 
     }
 
+    /**
+     * Method to solve the puzzle via backtracking without a heuristic
+     * @param puzzle
+     * @param startNode
+     */
     public void simpleSolve(char[][] puzzle, Node startNode)
     {
         //
