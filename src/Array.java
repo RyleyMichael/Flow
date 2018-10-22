@@ -1,5 +1,5 @@
 /**
- * Class to perform conversions on an ArrayList
+ * Class to perform conversions on the puzzle as an ArrayList, 2d char array
  */
 
 //imports
@@ -18,9 +18,36 @@ public class Array {
     }
 
     /**
+     * Method to find the starting point in the puzzle
+     * the starting point, in this case, is just the first non-filled entry in the table
+     * @param puzzle the original flow grid
+     * @return the starting point as a Node instance
+     */
+    public Node findStart(char[][] puzzle)
+    {
+        Node start = new Node(0, 0);
+
+        //loop through the rows
+        for (int row = 0; row < puzzle.length; row++)
+        {
+            //loop through the columns
+            for (int col = 0; col < puzzle[0].length; col++)
+            {
+                if (puzzle[row][col] == '_')
+                {
+                    start.setRowCord(row);
+                    start.setColCord(col);
+                    return start;
+                }
+            }
+        }
+        return start;
+    }
+
+    /**
      * Method to convert a two-dimensional ArrayList into a two-dimensional char array
-     * @param input
-     * @return
+     * @param input the text file as a 2d ArrayList
+     * @return a 2d char array representing the puzzle
      */
     public char[][] convert(ArrayList<ArrayList<Character>> input)
     {
@@ -42,7 +69,7 @@ public class Array {
 
     /**
      * Method to print a two-dimensional char array
-     * @param input
+     * @param input 2d char array
      */
     public void print(char[][] input)
     {
