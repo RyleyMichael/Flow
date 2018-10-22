@@ -50,9 +50,15 @@ public class Driver {
             System.out.println(exception);
         }
 
-        //convert the array list to a 2d char array
+        //convert the array list to a 2d char array and print it
         Array array = new Array();
         char[][] openPuzzle = array.convert(puzzle);
+        System.out.println("\nOriginal Puzzle");
         array.print(openPuzzle);
+
+        //solve the puzzle using simple backtracking i.e. dumb approach
+        
+
+        //solve the puzzle using backtracking with the help of some heuristic function
     }
 }
