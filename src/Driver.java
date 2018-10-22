@@ -20,7 +20,7 @@ public class Driver {
         try
         {
             //opens the file
-            Scanner fileRead = new Scanner(new FileReader("5x5maze.txt"));
+            Scanner fileRead = new Scanner(new FileReader("10x10maze.txt"));
 
             //counter to represent the inner array list
             int i = 0;
@@ -56,8 +56,12 @@ public class Driver {
         System.out.println("\nOriginal Puzzle");
         array.print(openPuzzle);
 
+        //find the starting Node in the puzzle
+        Node start = array.findStart(openPuzzle);
+        System.out.print("\nStarting node is " + start);
+
         //solve the puzzle using simple backtracking i.e. dumb approach
-        
+
 
         //solve the puzzle using backtracking with the help of some heuristic function
     }

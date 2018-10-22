@@ -7,8 +7,13 @@ public class Backtrack
     /**
      * Constructor
      */
-    public void Backtrack()
+    public Backtrack()
     {
 
+    }
+
+    public void simpleSolve(char[][] puzzle, Node startNode)
+    {
+        //
     }
 }
