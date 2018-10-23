@@ -20,7 +20,7 @@ public class Driver {
         try
         {
             //opens the file
-            Scanner fileRead = new Scanner(new FileReader("5x5maze.txt"));
+            Scanner fileRead = new Scanner(new FileReader("14x14maze.txt"));
 
             //counter to represent the inner array list
             int i = 0;
@@ -59,6 +59,11 @@ public class Driver {
         //find the starting Node in the puzzle
         Node start = array.findStart(openPuzzle);
         System.out.println("\nStarting node is " + start);
+
+        //get all the colors in the puzzle
+        Object[] colors = array.getColors(openPuzzle);
+        System.out.println("Colors are..");
+        array.printColors(colors);
 
         //print all dot locations in the puzzle
         array.printDots(openPuzzle);

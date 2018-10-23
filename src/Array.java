@@ -18,6 +18,40 @@ public class Array {
     }
 
     /**
+     * Method to find the different colors that are present in the puzzle
+     * @param puzzle the original flow grid
+     * @return the different colors as a character array
+     */
+    public Object[] getColors(Node[][] puzzle)
+    {
+        ArrayList<Character> colorList = new ArrayList<>();
+
+        //loop through the rows
+        for (int row = 0; row < puzzle.length; row++)
+        {
+            //loop through the columns
+            for (int col = 0; col < puzzle[row].length; col++)
+            {
+                //only add colors that have not been encountered
+                if (!colorList.contains(puzzle[row][col].getSymbol()) && puzzle[row][col].isDot())
+                {
+                    colorList.add(puzzle[row][col].getSymbol());
+                }
+            }
+        }
+
+         return colorList.toArray();
+    }
+
+    public void printColors(Object[] colors)
+    {
+        for (int i = 0; i < colors.length; i++)
+        {
+            System.out.println(colors[i]);
+        }
+    }
+
+    /**
      * Method to find all the dots i.e. starting/ending points in the maze
      * @param puzzle the original flow grid
      */
@@ -27,7 +61,7 @@ public class Array {
         for (int row = 0; row < puzzle.length; row++)
         {
             //loop through the columns
-            for (int col = 0; col < puzzle[0].length; col++)
+            for (int col = 0; col < puzzle[row].length; col++)
             {
                 //only print the dots
                 if (puzzle[row][col].isDot())
@@ -53,7 +87,7 @@ public class Array {
         for (int row = 0; row < puzzle.length; row++)
         {
             //loop through the columns
-            for (int col = 0; col < puzzle[0].length; col++)
+            for (int col = 0; col < puzzle[row].length; col++)
             {
                 //the starting point is the first empty Node
                 if (puzzle[row][col].getSymbol() == '_')
@@ -96,7 +130,6 @@ public class Array {
                 }
             }
         }
-
         return puzzle;
     }
 
@@ -106,12 +139,13 @@ public class Array {
      */
     public void print(Node[][] input)
     {
-        //loop through the entire puzzle
-        for (int i = 0; i < input.length; i++)
+        //loop through the rows
+        for (int row = 0; row < input.length; row++)
         {
-            for (int j = 0; j < input[0].length; j++)
+            //loop through the columns
+            for (int col = 0; col < input[row].length; col++)
             {
-                System.out.print(input[i][j].getSymbol());
+                System.out.print(input[row][col].getSymbol());
             }
             System.out.println();
         }
