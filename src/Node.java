@@ -30,6 +30,15 @@ public class Node
     }
 
     /**
+     * Method to set the symbol of a Node
+     * @param symbol the symbol as a character
+     */
+    public void setSymbol(char symbol)
+    {
+        this.symbol = symbol;
+    }
+
+    /**
      * Method to return the symbol of a Node
      * @return the symbol as a character
      */
