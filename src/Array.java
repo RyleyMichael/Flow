@@ -43,6 +43,11 @@ public class Array {
          return colorList.toArray();
     }
 
+    /**
+     * Method to print the colors in the puzzle
+     * This method is mainly for testing
+     * @param colors the list of colors as an Object array
+     */
     public void printColors(Object[] colors)
     {
         for (int i = 0; i < colors.length; i++)
