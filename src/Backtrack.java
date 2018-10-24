@@ -28,18 +28,16 @@ public class Backtrack
      */
     public void simpleSolve(Node currentNode)
     {
-
-
-
-
-
-
-        /*
-        //loop through all possible color choices, but keep trying the same color until it *fails*
-        for (int i = 0; i < puzzle.length; i++)
+        //loop through all possible color choices
+        for (int i = 0; i < colors.length; i++)
         {
-            //place a color in the current position
             puzzle[currentNode.getRowCord()][currentNode.getColCord()].setSymbol((Character) colors[i]);
+            currentNode.setSymbol((Character) colors[i]);
+            currentNode.setVisited(true);
+
+            //print the puzzle
+            Array a = new Array();
+            a.print(puzzle);
 
             //the placement is valid
             if (constraint.checkAdjacent(puzzle, currentNode))
@@ -50,29 +48,32 @@ public class Backtrack
                     System.out.println("the solution is complete");
                 }
 
-                //valid but not complete?
+                //valid but not complete
                 else
                 {
-                    //reached the end of a row
-                    if (currentNode.getColCord() == puzzle.length - 1)
+                    simpleSolve(currentNode.getNext(puzzle));
+                    /*
+                    //not at the end of a row
+                    if (currentNode.getColCord() != puzzle.length - 1)
                     {
-                        //solve by moving to the next row
-                        simpleSolve();
+                        currentNode = puzzle[currentNode.getRowCord()][currentNode.getColCord() + 1];
+                        simpleSolve(currentNode);
                     }
 
-                    //reached the end of the maze
-                    else if (true)
+                    //not on the last row
+                    else if (currentNode.getRowCord() != puzzle.length - 1)
                     {
-
+                        //move to the next row
+                        currentNode = puzzle[currentNode.getRowCord() + 1][0];
+                        simpleSolve(currentNode);
                     }
+                    */
                 }
             }
 
-            //the placement is not valid, we want to try the next color at this position
-
-
-            //update start by one if we haven't reached the end of the array
+            puzzle[currentNode.getRowCord()][currentNode.getColCord()].setSymbol('_');
+            currentNode.setSymbol('_');
+            currentNode.setVisited(false);
         }
-        */
     }
 }

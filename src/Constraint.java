@@ -25,8 +25,10 @@ public class Constraint {
             //loop through the columns
             for (int col = 0; col < puzzle[row].length; col++)
             {
-                //a blank space is encountered
-                if (puzzle[row][col].getSymbol() == '_')
+                //a blank space is encountered or a Node fails a constraint
+                //SHOULDN'T NEED TO CHECK THE SECOND CONDITION.. BUT WE SHALL SEE
+                if (puzzle[row][col].getSymbol() == '_' ||
+                        checkAdjacent(puzzle, puzzle[row][col]))
                 {
                     return false;
                 }
@@ -52,41 +54,66 @@ public class Constraint {
 
         char color = node.getSymbol();
 
-        //check North Node
-        if (puzzle[node.getRowCord() - 1][node.getColCord()].getSymbol() == color)
+        //only check viable Nodes i.e. values within the range of the array
+        //check North
+        if (node.getRowCord() - 1 > -1)
         {
-            //update the number of adjacent Nodes
-            adjNodes++;
+            Node north = puzzle[node.getRowCord() - 1][node.getColCord()];
+
+            //only care about Nodes of the same colors
+            if (north.getSymbol() == color)
+            {
+                //update the number of adjacent Nodes
+                adjNodes++;
+            }
         }
 
         //check East
-        if (puzzle[node.getRowCord()][node.getColCord() + 1].getSymbol() == color)
+        if (node.getColCord() + 1 < puzzle.length - 1)
         {
-            adjNodes++;
+            if (puzzle[node.getRowCord()][node.getColCord() + 1].getSymbol() == color)
+            {
+                adjNodes++;
+            }
         }
 
         //check South
-        if (puzzle[node.getRowCord() + 1][node.getColCord()].getSymbol() == color)
+        if (node.getRowCord() + 1 < puzzle.length - 1)
         {
-            adjNodes++;
+            if (puzzle[node.getRowCord() + 1][node.getColCord()].getSymbol() == color)
+            {
+                adjNodes++;
+            }
         }
 
         //check West
-        if (puzzle[node.getRowCord()][node.getColCord() - 1].getSymbol() == color)
+        if (node.getColCord() - 1 > -1)
         {
-            adjNodes++;
+            if (puzzle[node.getRowCord()][node.getColCord() - 1].getSymbol() == color)
+            {
+                adjNodes++;
+            }
         }
 
-        //the placement is valid
-        if ((node.isDot() && adjNodes == 1) || (!node.isDot() && adjNodes == 2))
+        //Node is a dot
+        if (node.isDot())
         {
-            return true;
+            //placement is not valid
+            if (adjNodes > 1)
+            {
+                return false;
+            }
         }
 
-        //the placement is not valid
-        else
+        //Node is a cell to be filled
+        else if (!node.isDot())
         {
-            return false;
+            if (adjNodes > 2)
+            {
+                return false;
+            }
         }
+
+        return true;
     }
 }

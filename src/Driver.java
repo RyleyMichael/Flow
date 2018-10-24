@@ -70,7 +70,18 @@ public class Driver {
 
         //solve the puzzle using dumb backtracking i.e. no heuristic
         Backtrack backtrack = new Backtrack(openPuzzle, colors);
-        backtrack.simpleSolve(start);
+        //backtrack.simpleSolve(start);
+
+        //testing
+        Node two = start.getNext(openPuzzle);
+        System.out.println(two);
+        Node three = two.getNext(openPuzzle);
+        System.out.println(three);
+        Node four = three.getNext(openPuzzle);
+        System.out.println(four);
+        Node five = four.getNext(openPuzzle);
+        System.out.println(five);
+
 
         //solve the puzzle using smart backtracking i.e. with some heuristic
     }
