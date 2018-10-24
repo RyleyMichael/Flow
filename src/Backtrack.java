@@ -33,7 +33,6 @@ public class Backtrack
         {
             puzzle[currentNode.getRowCord()][currentNode.getColCord()].setSymbol((Character) colors[i]);
             currentNode.setSymbol((Character) colors[i]);
-            currentNode.setVisited(true);
 
             //print the puzzle
             Array a = new Array();
@@ -51,7 +50,9 @@ public class Backtrack
                 //valid but not complete
                 else
                 {
-                    simpleSolve(currentNode.getNext(puzzle));
+                    Node node = currentNode.getNext(puzzle);
+
+                    simpleSolve(node);
                     /*
                     //not at the end of a row
                     if (currentNode.getColCord() != puzzle.length - 1)
@@ -73,7 +74,6 @@ public class Backtrack
 
             puzzle[currentNode.getRowCord()][currentNode.getColCord()].setSymbol('_');
             currentNode.setSymbol('_');
-            currentNode.setVisited(false);
         }
     }
 }

@@ -9,7 +9,6 @@ public class Node
     private int colCord;
     private char symbol;
     private boolean dot; //a dot is a starting/ending point in the maze
-    private boolean visited;
 
     /**
      * Constructor
@@ -35,32 +34,37 @@ public class Node
             //loop through the columns
             for (int col = 0; col < puzzle.length; col++)
             {
-                //skip dots
-                if (!puzzle[row][col].isDot() && !puzzle[row][col].isVisited())
+                //skip dots and Nodes that are filled in
+                if (!puzzle[row][col].isDot() && puzzle[row][col].getSymbol() == '_')
                 {
-                    return puzzle[row][col];
+                    //skip the current Node
+                    if (!this.isEqual(puzzle[row][col]))
+                    {
+                        return puzzle[row][col];
+                    }
                 }
             }
         }
-
         return this;
     }
 
     /**
-     * Method to check if a Node has been visited
-     * @return a boolean value
+     *
+     * @param node
+     * @return
      */
-    public boolean isVisited()
+    public boolean isEqual(Node node)
     {
-        return visited;
-    }
-
-    /**
-     * Method to set a Node visited
-     */
-    public void setVisited(boolean value)
-    {
-        this.visited = value;
+        //the row coordinate is the same
+        if (this.getRowCord() == node.getRowCord())
+        {
+            //the column coordinate is the same
+            if (this.getColCord() == node.getColCord())
+            {
+                return true;
+            }
+        }
+        return false;
     }
 
     /**
