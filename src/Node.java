@@ -49,9 +49,9 @@ public class Node
     }
 
     /**
-     *
-     * @param node
-     * @return
+     * Method to determine if two Nodes are the same
+     * @param node the Node to be checked against 'this'
+     * @return a boolean value representing if the Nodes are equal
      */
     public boolean isEqual(Node node)
     {

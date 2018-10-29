@@ -58,7 +58,7 @@ public class Driver {
 
         //find the starting Node in the puzzle
         Node start = array.findStart(openPuzzle);
-        System.out.println("\nStarting node is " + start);
+        //System.out.println("\nStarting node is " + start);
 
         //get all the colors in the puzzle
         Object[] colors = array.getColors(openPuzzle);
@@ -72,7 +72,7 @@ public class Driver {
         Backtrack backtrack = new Backtrack(openPuzzle, colors);
         //backtrack.simpleSolve(start);
 
-        openPuzzle[start.getRowCord()][start.getColCord()].setSymbol('B');
+        /*openPuzzle[start.getRowCord()][start.getColCord()].setSymbol('B');
         Node two = start.getNext(openPuzzle);
         System.out.println(two);
 
@@ -102,7 +102,7 @@ public class Driver {
 
         openPuzzle[eight.getRowCord()][eight.getColCord()].setSymbol('B');
         Node nine = eight.getNext(openPuzzle);
-        System.out.println(nine);
+        System.out.println(nine);*/
 
         //solve the puzzle using smart backtracking i.e. with some heuristic
     }
