@@ -27,7 +27,6 @@ public class Constraint {
             {
                 //a blank space is encountered or a Node fails a constraint
                 if (puzzle[row][col].getSymbol() == '_' ||
-                //        !checkComplete(puzzle, puzzle[row][col]))
                           !checkAdjacent(puzzle, puzzle[row][col]))
                 {
                     return false;
