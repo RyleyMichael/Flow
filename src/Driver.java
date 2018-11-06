@@ -20,7 +20,7 @@ public class Driver {
         try
         {
             //opens the file
-            Scanner fileRead = new Scanner(new FileReader("5x5maze.txt"));
+            Scanner fileRead = new Scanner(new FileReader("easy.txt"));
 
             //counter to represent the inner array list
             int i = 0;
@@ -62,15 +62,16 @@ public class Driver {
 
         //get all the colors in the puzzle
         Object[] colors = array.getColors(openPuzzle);
-        //System.out.println("Colors are..");
+        //System.out.println("\nColors are..");
         //array.printColors(colors);
 
         //print all dot locations in the puzzle
+        //System.out.println("\nDots at...");
         //array.printDots(openPuzzle);
 
         //solve the puzzle using dumb backtracking i.e. no heuristic
         Backtrack backtrack = new Backtrack(openPuzzle, colors);
-        //backtrack.simpleSolve(start);
+        backtrack.simpleSolve(start);
 
         /*openPuzzle[start.getRowCord()][start.getColCord()].setSymbol('B');
         Node two = start.getNext(openPuzzle);

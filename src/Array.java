@@ -30,7 +30,7 @@ public class Array {
         for (int row = 0; row < puzzle.length; row++)
         {
             //loop through the columns
-            for (int col = 0; col < puzzle.length; col++)
+            for (int col = 0; col < puzzle[row].length; col++)
             {
                 //only add colors that have not been encountered
                 if (!colorList.contains(puzzle[row][col].getSymbol()) && puzzle[row][col].isDot())
@@ -66,7 +66,7 @@ public class Array {
         for (int row = 0; row < puzzle.length; row++)
         {
             //loop through the columns
-            for (int col = 0; col < puzzle.length; col++)
+            for (int col = 0; col < puzzle[row].length; col++)
             {
                 //only print the dots
                 if (puzzle[row][col].isDot())
@@ -92,7 +92,7 @@ public class Array {
         for (int row = 0; row < puzzle.length; row++)
         {
             //loop through the columns
-            for (int col = 0; col < puzzle.length; col++)
+            for (int col = 0; col < puzzle[row].length; col++)
             {
                 //the starting point is the first empty Node
                 if (puzzle[row][col].getSymbol() == '_')
@@ -148,7 +148,7 @@ public class Array {
         for (int row = 0; row < input.length; row++)
         {
             //loop through the columns
-            for (int col = 0; col < input.length; col++)
+            for (int col = 0; col < input[row].length; col++)
             {
                 System.out.print(input[row][col].getSymbol());
             }

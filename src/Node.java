@@ -32,7 +32,7 @@ public class Node
         for (int row = 0; row < puzzle.length; row++)
         {
             //loop through the columns
-            for (int col = 0; col < puzzle.length; col++)
+            for (int col = 0; col < puzzle[row].length; col++)
             {
                 //skip dots and Nodes that are filled in
                 if (!puzzle[row][col].isDot() && puzzle[row][col].getSymbol() == '_')
@@ -73,7 +73,7 @@ public class Node
     @Override
     public String toString()
     {
-        return "(" + rowCord + ", " + colCord + ")";
+        return "(" + rowCord + ", " + colCord + ") " + symbol;
     }
 
     /**

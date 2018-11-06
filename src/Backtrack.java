@@ -41,6 +41,9 @@ public class Backtrack
             System.out.println();
             array.print(puzzle);
 
+            //print the current node
+            System.out.println("Current Node: " + currentNode);
+
             //this is the general form of the algorithm... as far as i understand it
             //place a color in the current position
             //if recent placement does not violate constraints
@@ -53,7 +56,7 @@ public class Backtrack
                 //try the next color at the same position
 
             //if recent placement does not violate constraints for the board so far i.e. board does not have to be full
-            if (constraint.isValid(puzzle))
+            if (constraint.checkAdjacent(puzzle, currentNode))
             {
                 //if the whole board is full and constraints hold for all positions
                 if (constraint.isComplete(puzzle))
@@ -72,36 +75,9 @@ public class Backtrack
                 }
             }
 
-            //else if the recent placement does violate constraints
-            else
-            {
-                //remove the recent placement
-                puzzle[currentNode.getRowCord()][currentNode.getColCord()].setSymbol('_');
-                currentNode.setSymbol('_');
-
-                //try the next color at the same position
-                continue;
-            }
-
-            //the placement is valid
-            /*if (constraint.checkAdjacent(puzzle, currentNode))
-            {
-                //the solution is complete
-                if (constraint.isComplete(puzzle))
-                {
-                    System.out.println("the solution is complete");
-                }
-
-                //valid but not complete
-                else
-                {
-                    Node node = currentNode.getNext(puzzle);
-                    simpleSolve(node);
-                }
-            }
-
+            //the recent placement does violate constraints, so remove it
             puzzle[currentNode.getRowCord()][currentNode.getColCord()].setSymbol('_');
-            currentNode.setSymbol('_');*/
+            currentNode.setSymbol('_');
         }
     }
 }
