@@ -9,6 +9,7 @@ public class Node
     private int colCord;
     private char symbol;
     private boolean dot; //a dot is a starting/ending point in the maze
+    private boolean assigned;
 
     /**
      * Constructor
@@ -18,6 +19,16 @@ public class Node
         this.rowCord = rowCord;
         this.colCord = colCord;
         this.symbol = symbol;
+    }
+
+    public boolean isAssigned()
+    {
+        return assigned;
+    }
+
+    public void setAssigned(boolean assigned)
+    {
+        this.assigned = assigned;
     }
 
     /**
@@ -30,11 +41,19 @@ public class Node
     {
         //loop through the rows
         for (int row = 0; row < puzzle.length; row++)
+        //loop through the columns
+        //for (int col = 0; col < puzzle[0].length; col++)
         {
             //loop through the columns
             for (int col = 0; col < puzzle[row].length; col++)
+            //loop through the rows
+            //for (int row = 0; row < puzzle.length; row++)
             {
-                //skip dots and Nodes that are filled in
+                if (!puzzle[row][col].isAssigned())
+                {
+                    return puzzle[row][col];
+                }
+                /*//skip dots and Nodes that are filled in
                 if (!puzzle[row][col].isDot() && puzzle[row][col].getSymbol() == '_')
                 {
                     //skip the current Node
@@ -42,7 +61,7 @@ public class Node
                     {
                         return puzzle[row][col];
                     }
-                }
+                }*/
             }
         }
         return this;
@@ -82,6 +101,7 @@ public class Node
      */
     public void setSymbol(char symbol)
     {
+        this.assigned = true;
         this.symbol = symbol;
     }
 
@@ -131,11 +151,12 @@ public class Node
     }
 
     /**
-     * Method to mark a Node as a dot
+     * Method to mark a Node as a dot; and also as assigned
      */
     public void setDot()
     {
         this.dot = true;
+        this.assigned = true;
     }
 
     /**
