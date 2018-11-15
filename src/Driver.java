@@ -20,7 +20,7 @@ public class Driver {
         try
         {
             //opens the file
-            Scanner fileRead = new Scanner(new FileReader("easy.txt"));
+            Scanner fileRead = new Scanner(new FileReader("5x5maze.txt"));
 
             //counter to represent the inner array list
             int i = 0;
@@ -57,7 +57,7 @@ public class Driver {
         array.print(openPuzzle);
 
         //find the starting Node in the puzzle
-        Node start = array.findStart(openPuzzle);
+        //Node start = array.findStart(openPuzzle);
         //System.out.println("\nStarting node is " + start);
 
         //get all the colors in the puzzle
@@ -71,10 +71,16 @@ public class Driver {
 
         //solve the puzzle using dumb backtracking i.e. no heuristic
         Backtrack backtrack = new Backtrack(openPuzzle, colors);
-        backtrack.simpleSolve(start);
+        Node[][] solvedPuzzle =  backtrack.dumbSolve();
+        System.out.println("\nSolved Puzzle");
+        array.print(solvedPuzzle);
+        //backtrack.simpleSolve(start);
+        //backtrack.dumbdumb();
 
-        /*openPuzzle[start.getRowCord()][start.getColCord()].setSymbol('B');
-        Node two = start.getNext(openPuzzle);
+
+        /*
+        openPuzzle[0][0].setSymbol('B');
+        Node two = openPuzzle[0][0].getNext(openPuzzle);
         System.out.println(two);
 
         openPuzzle[two.getRowCord()][two.getColCord()].setSymbol('B');
@@ -103,7 +109,8 @@ public class Driver {
 
         openPuzzle[eight.getRowCord()][eight.getColCord()].setSymbol('B');
         Node nine = eight.getNext(openPuzzle);
-        System.out.println(nine);*/
+        System.out.println(nine);
+        */
 
         //solve the puzzle using smart backtracking i.e. with some heuristic
     }

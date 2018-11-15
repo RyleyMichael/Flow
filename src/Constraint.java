@@ -12,22 +12,55 @@ public class Constraint {
 
     }
 
+    public boolean path(Node[][] puzzle, Node node)
+    {
+        //check if the Node is a dot or un-filled
+        if (node.isDot() || node.getSymbol() == '_')
+        {
+            return true;
+        }
+
+        //the Node is a filled-in cell, make sure it has a path to two dots
+        return true;
+    }
+
+    public boolean isValid(Node[][] puzzle)
+    {
+        //loop through the columns
+        for (int row = 0; row < puzzle.length; row++)
+        {
+            //loop through the rows
+            for (int col = 0; col < puzzle[row].length; col++)
+            {
+                //check the neighbors of each Node
+                if (!checkAdjacent(puzzle, puzzle[row][col]))
+                {
+                    return false;
+                }
+            }
+        }
+        return true;
+    }
+
     /**
-     * Method to check if the entire puzzle violates any constraints
+     * Method to check if the entire puzzle is full
      * @param puzzle the Flow grid as a 2d Node array
      * @return a boolean representing whether or not the puzzle is full
      */
-    public boolean isComplete(Node[][] puzzle)
+    public boolean isFull(Node[][] puzzle)
     {
         //loop through the rows
         for (int row = 0; row < puzzle.length; row++)
+        //loop through the columns
+        //for (int col = 0; col < puzzle[0].length; col++)
         {
             //loop through the columns
             for (int col = 0; col < puzzle[row].length; col++)
+            //loop through the rows
+            //for (int row = 0; row < puzzle.length; row++)
             {
                 //a blank space is encountered or a Node fails a constraint
-                if (puzzle[row][col].getSymbol() == '_' ||
-                          !checkAdjacent(puzzle, puzzle[row][col]))
+                if (puzzle[row][col].getSymbol() == '_')
                 {
                     return false;
                 }
@@ -52,55 +85,106 @@ public class Constraint {
         //represents the number of adjacent Nodes of the same color
         int adjNodes = 0;
         char color = node.getSymbol();
+        boolean nonFilledAdjNodes = false;
 
-        //only check viable Nodes i.e. values within the range of the array
-        //check North if not on first row
-        if (node.getRowCord() > 0) {
-            //only care about Nodes of the same colors
-            if (puzzle[node.getRowCord() - 1][node.getColCord()].getSymbol() == color) {
-                //update the number of adjacent Nodes
-                adjNodes++;
-            }
-        }
-
-        //check East if not on last column
-        if (node.getColCord() < puzzle[0].length - 1) {
-            if (puzzle[node.getRowCord()][node.getColCord() + 1].getSymbol() == color) {
-                adjNodes++;
-            }
-        }
-
-        //check South if not on last row
-        if (node.getRowCord() < puzzle.length - 1) {
-            if (puzzle[node.getRowCord() + 1][node.getColCord()].getSymbol() == color) {
-                adjNodes++;
-            }
-        }
-
-        //check West
-        if (node.getColCord() > 0) {
-            if (puzzle[node.getRowCord()][node.getColCord() - 1].getSymbol() == color) {
-                adjNodes++;
-            }
-        }
-
-        //the Node is not a dot
-        if (!node.isDot())
+        //only checking Nodes that have already been filled in and dots i.e. skip unfilled Nodes
+        //if (color != '_') *BOTH IF STATEMENTS WORK*
+        if (node.isAssigned())
         {
-            //number of adjacent nodes to a newly filled-in cell must be at least one, not greater than 2
-            if (adjNodes < 1 || adjNodes > 2)
+            //only check viable Nodes i.e. values within the range of the array
+            //check North if not on first row
+            if (node.getRowCord() > 0)
             {
-                return false;
-            }
-        }
+                //only care about Nodes of the same colors
+                if (puzzle[node.getRowCord() - 1][node.getColCord()].getSymbol() == color)
+                {
+                    //update the number of adjacent Nodes
+                    adjNodes++;
+                }
 
-        //the Node is a dot
-        else if (node.isDot())
-        {
-            //number of adjacent nodes to a dot must be exactly one
-            if (adjNodes != 1)
+                //check for non-filled adjacent Nodes
+                if (!puzzle[node.getRowCord() - 1][node.getColCord()].isAssigned())
+                {
+                    //unassigned adjacent Node found
+                    nonFilledAdjNodes = true;
+                }
+            }
+
+            //check East if not on last column
+            if (node.getColCord() < puzzle[0].length - 1) {
+                if (puzzle[node.getRowCord()][node.getColCord() + 1].getSymbol() == color)
+                {
+                    adjNodes++;
+                }
+
+                //check for non-filled adjacent Nodes
+                if (!puzzle[node.getRowCord()][node.getColCord() + 1].isAssigned())
+                {
+                    //unassigned adjacent Node found
+                    nonFilledAdjNodes = true;
+                }
+            }
+
+            //check South if not on last row
+            if (node.getRowCord() < puzzle.length - 1) {
+                if (puzzle[node.getRowCord() + 1][node.getColCord()].getSymbol() == color)
+                {
+                    adjNodes++;
+                }
+
+                //check for non-filled adjacent Nodes
+                if (!puzzle[node.getRowCord() + 1][node.getColCord()].isAssigned())
+                {
+                    //unassigned adjacent Node found
+                    nonFilledAdjNodes = true;
+                }
+            }
+
+            //check West
+            if (node.getColCord() > 0) {
+                if (puzzle[node.getRowCord()][node.getColCord() - 1].getSymbol() == color)
+                {
+                    adjNodes++;
+                }
+
+                //check for non-filled adjacent Nodes
+                if (!puzzle[node.getRowCord()][node.getColCord() - 1].isAssigned())
+                {
+                    //unassigned adjacent Node found
+                    nonFilledAdjNodes = true;
+                }
+            }
+
+            //only check Nodes whose adjacent Nodes are all assigned
+            if (!nonFilledAdjNodes)
             {
-                return false;
+                //no adjacent Nodes are of the same color as the Node being checked
+                if (adjNodes == 0)
+                {
+                    return false;
+                }
+
+                //the Node is not a dot
+                if (!node.isDot())
+                {
+                    //number of adjacent nodes to a newly filled-in cell must be at least one, not greater than 2
+                    //if (adjNodes < 1 || adjNodes > 2)
+                    if (adjNodes != 2)
+                    //if (adjNodes > 2)
+                    {
+                        return false;
+                    }
+                }
+
+                //the Node is a dot
+                if (node.isDot())
+                {
+                    //number of adjacent nodes to a dot must be exactly one
+                    //if (adjNodes > 1)
+                    if (adjNodes != 1) {
+                        return false;
+                    }
+                }
             }
         }
         return true;

@@ -89,10 +89,10 @@ public class Array {
         Node start = new Node(0, 0, '_');
 
         //loop through the rows
-        for (int row = 0; row < puzzle.length; row++)
+        for (int col = 0; col < puzzle[0].length; col++)
         {
             //loop through the columns
-            for (int col = 0; col < puzzle[row].length; col++)
+            for (int row = 0; row < puzzle.length; row ++)
             {
                 //the starting point is the first empty Node
                 if (puzzle[row][col].getSymbol() == '_')
