@@ -20,7 +20,7 @@ public class Driver {
         try
         {
             //opens the file
-            Scanner fileRead = new Scanner(new FileReader("5x5maze.txt"));
+            Scanner fileRead = new Scanner(new FileReader("12x12maze.txt"));
 
             //counter to represent the inner array list
             int i = 0;
@@ -71,7 +71,7 @@ public class Driver {
 
         //solve the puzzle using dumb backtracking i.e. no heuristic
         Backtrack backtrack = new Backtrack(openPuzzle, colors);
-        Node[][] solvedPuzzle =  backtrack.dumbSolve();
+        Node[][] solvedPuzzle =  backtrack.smartSolve();
         System.out.println("\nSolved Puzzle");
         array.print(solvedPuzzle);
         //backtrack.simpleSolve(start);

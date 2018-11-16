@@ -67,6 +67,50 @@ public class Node
         return this;
     }
 
+    public Node getMCN(Node[][] puzzle){
+        int constraints;
+        int maxConstraints = 0;
+        Node node;
+        Node mostConstrained = this;
+        for (int row = 0; row < puzzle.length; row++){
+            for (int col = 0; col < puzzle[row].length; col++){
+                node = puzzle[row][col];
+                constraints = 0;
+                if (node.getRowCord() > 0) {
+                    //only care about Nodes of the same colors
+                    if (puzzle[node.getRowCord() - 1][node.getColCord()].getSymbol() != '_') {
+                        //update the number of adjacent Nodes
+                        constraints++;
+                    }
+                }
+                if (node.getColCord() < puzzle[0].length - 1) {
+                    if (puzzle[node.getRowCord()][node.getColCord() + 1].getSymbol() != '_') {
+                        constraints++;
+                    }
+                }
+                if (node.getRowCord() < puzzle.length - 1) {
+                    if (puzzle[node.getRowCord() + 1][node.getColCord()].getSymbol() != '_') {
+                        constraints++;
+                    }
+                }
+                if (node.getColCord() > 0) {
+                    if (puzzle[node.getRowCord()][node.getColCord() - 1].getSymbol() != '_') {
+                        constraints++;
+                    }
+                }
+
+                if(constraints == 4){
+                    return node;
+                }
+                if(constraints > maxConstraints){
+                    mostConstrained = node;
+                    maxConstraints = constraints;
+                }
+            }
+        }
+        return mostConstrained;
+    }
+
     /**
      * Method to determine if two Nodes are the same
      * @param node the Node to be checked against 'this'

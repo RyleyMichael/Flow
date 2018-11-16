@@ -189,4 +189,67 @@ public class Constraint {
         }
         return true;
     }
+
+    public boolean forwardChecking(Node[][] puzzle, Object[] colors)
+    {
+        //represents the number of adjacent Nodes of the same color
+        int adjNodes;
+        boolean validDomain;
+        for (int row = 0; row < puzzle.length; row++){
+            for (int col = 0; col < puzzle[row].length; col++){
+                if (puzzle[row][col].getSymbol() == '_') {
+                    validDomain = false;
+                    for (Object color : colors) {
+                        adjNodes = 0;
+                        //only check viable Nodes i.e. values within the range of the array
+                        //check North if not on first row
+                        if (row > 0) {
+                            //only care about Nodes of the same colors
+                            if (puzzle[row - 1][col].getSymbol() == (char)color) {
+                                //update the number of adjacent Nodes
+                                adjNodes++;
+                            }
+                        }
+
+                        //check East if not on last column
+                        if (col < puzzle[0].length - 1) {
+                            if (puzzle[row][col + 1].getSymbol() == (char)color) {
+                                adjNodes++;
+                            }
+                        }
+
+                        //check South if not on last row
+                        if (row < puzzle.length - 1) {
+                            if (puzzle[row + 1][col].getSymbol() == (char)color) {
+                                adjNodes++;
+                            }
+                        }
+
+                        //check West
+                        if (col > 0) {
+                            if (puzzle[row][col - 1].getSymbol() == (char)color) {
+                                adjNodes++;
+                            }
+                        }
+
+                        if(puzzle[row][col].isDot()) {
+                            if (adjNodes < 1){
+                                validDomain = true;
+                            }
+                        }
+                        else{
+                            if (adjNodes < 2){
+                                validDomain = true;
+                            }
+                        }
+                    }
+                    if (!validDomain)
+                        return false;
+                }
+            }
+        }
+
+
+        return true;
+    }
 }

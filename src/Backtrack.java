@@ -34,6 +34,7 @@ public class Backtrack
             return puzzle;
         }
 
+        // get most constrained node
         Node nextNode = initial.getNext(puzzle);
 
         //loop through all color choices
@@ -59,6 +60,52 @@ public class Backtrack
                 {
                     //solution found
                     return solution;
+                }
+            }
+            //reset the placement
+            puzzle[nextNode.getRowCord()][nextNode.getColCord()].setSymbol('_');
+            puzzle[nextNode.getRowCord()][nextNode.getColCord()].setAssigned(false);
+        }
+        return null;
+    }
+
+    public Node[][] smartSolve()
+    {
+        //if the puzzle is full
+        if (constraint.isFull(puzzle))
+        {
+            //solution found
+            return puzzle;
+        }
+
+        Node nextNode = initial.getMCN(puzzle);
+
+        //loop through all color choices
+        for (Object color : colors)
+        {
+            //try a color at the current position and mark it assigned
+            puzzle[nextNode.getRowCord()][nextNode.getColCord()].setSymbol((Character) color);
+            puzzle[nextNode.getRowCord()][nextNode.getColCord()].setAssigned(true);
+
+            //print for testing
+            /*System.out.println();
+            array.print(puzzle);
+            System.out.println("Current Node: " + puzzle[nextNode.getRowCord()][nextNode.getColCord()]);*/
+
+            //see if the placement is valid
+            if (constraint.isValid(puzzle))
+            {
+
+                if(constraint.forwardChecking(puzzle, colors)) {
+                    Node[][] solution = dumbSolve();
+
+
+                    //see if the placement is valid
+                    //if (solution != null && constraint.isValid(solution))
+                    if (solution != null && constraint.isValid(puzzle)) {
+                        //solution found
+                        return solution;
+                    }
                 }
             }
             //reset the placement
