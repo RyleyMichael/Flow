@@ -51,6 +51,7 @@ public class Backtrack
             //try a color at the current position and mark it assigned
             puzzle[nextNode.getRowCord()][nextNode.getColCord()].setSymbol((Character) color);
             puzzle[nextNode.getRowCord()][nextNode.getColCord()].setAssigned(true);
+            dumbCount++;
 
             //print for testing
             /*System.out.println();
@@ -60,8 +61,6 @@ public class Backtrack
             //the placement is valid
             if (constraint.isValid(puzzle))
             {
-                dumbCount++;
-
                 //recursive call
                 Node[][] solution = dumbSolve();
 
@@ -85,47 +84,6 @@ public class Backtrack
      */
     public Node[][] smartSolve()
     {
-        /*//the puzzle is full
-        if (constraint.isFull(puzzle))
-        {
-            //solution found
-            return puzzle;
-        }
-
-        Node nextNode = initial.getMostConstrained(puzzle, colors);
-
-        //loop through all color choices
-        for (Object color : colors)
-        {
-            //try a color at the current position and mark it assigned
-            puzzle[nextNode.getRowCord()][nextNode.getColCord()].setSymbol((Character) color);
-            puzzle[nextNode.getRowCord()][nextNode.getColCord()].setAssigned(true);
-
-            //print for testing
-            System.out.println();
-            array.print(puzzle);
-            System.out.println("Current Node: " + puzzle[nextNode.getRowCord()][nextNode.getColCord()]);
-
-            //see if the placement is valid
-            if (constraint.isValid(puzzle) &&
-                    constraint.forwardCheck(puzzle, puzzle[nextNode.getRowCord()][nextNode.getColCord()], colors))
-            {
-                Node[][] solution = smartSolve();
-
-                //see if the placement is valid
-                //if (solution != null && constraint.isValid(solution))
-                if (solution != null && constraint.isValid(puzzle))
-                {
-                    //solution found
-                    return solution;
-                }
-            }
-            //reset the placement
-            puzzle[nextNode.getRowCord()][nextNode.getColCord()].setSymbol('_');
-            puzzle[nextNode.getRowCord()][nextNode.getColCord()].setAssigned(false);
-        }
-        return null;*/
-
         //the puzzle is full
         if (constraint.isFull(puzzle))
         {
@@ -143,6 +101,7 @@ public class Backtrack
             //try a color at the current position and mark it assigned
             puzzle[nextNode.getRowCord()][nextNode.getColCord()].setSymbol((Character) color);
             puzzle[nextNode.getRowCord()][nextNode.getColCord()].setAssigned(true);
+            smartCount++;
 
             //print for testing
             /*System.out.println();
@@ -152,12 +111,9 @@ public class Backtrack
             //the placement is valid
             if (constraint.isValid(puzzle))
             {
-
                 //the placement passes forward checking
                 if(constraint.forwardChecking(puzzle, colors))
                 {
-                    smartCount++;
-
                     //recursive call
                     Node[][] solution = smartSolve();
 
