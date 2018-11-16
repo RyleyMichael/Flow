@@ -29,16 +29,20 @@ public class Backtrack
         smartCount = 0;
     }
 
+    /**
+     * Recursive method to solve the puzzle using simple backtracking
+     * @return a 2d array of Nodes, representing the solution
+     */
     public Node[][] dumbSolve()
     {
-        //if the puzzle is full
+        //the puzzle is full
         if (constraint.isFull(puzzle))
         {
             //solution found
             return puzzle;
         }
 
-        // get most constrained node
+        //retrieve the next Node to be checked
         Node nextNode = initial.getNext(puzzle);
 
         //loop through all color choices
@@ -53,14 +57,15 @@ public class Backtrack
             array.print(puzzle);
             System.out.println("Current Node: " + puzzle[nextNode.getRowCord()][nextNode.getColCord()]);*/
 
-            //see if the placement is valid
+            //the placement is valid
             if (constraint.isValid(puzzle))
             {
                 dumbCount++;
+
+                //recursive call
                 Node[][] solution = dumbSolve();
 
-                //see if the placement is valid
-                //if (solution != null && constraint.isValid(solution))
+                //the placement is non-null and valid
                 if (solution != null && constraint.isValid(puzzle))
                 {
                     //solution found
@@ -74,16 +79,63 @@ public class Backtrack
         return null;
     }
 
+    /**
+     * Recursive method to solve the puzzle using advanced backtracking
+     * @return a 2d Node array, representing the solution
+     */
     public Node[][] smartSolve()
     {
-        //if the puzzle is full
+        /*//the puzzle is full
         if (constraint.isFull(puzzle))
         {
             //solution found
             return puzzle;
         }
 
+        Node nextNode = initial.getMostConstrained(puzzle, colors);
+
+        //loop through all color choices
+        for (Object color : colors)
+        {
+            //try a color at the current position and mark it assigned
+            puzzle[nextNode.getRowCord()][nextNode.getColCord()].setSymbol((Character) color);
+            puzzle[nextNode.getRowCord()][nextNode.getColCord()].setAssigned(true);
+
+            //print for testing
+            System.out.println();
+            array.print(puzzle);
+            System.out.println("Current Node: " + puzzle[nextNode.getRowCord()][nextNode.getColCord()]);
+
+            //see if the placement is valid
+            if (constraint.isValid(puzzle) &&
+                    constraint.forwardCheck(puzzle, puzzle[nextNode.getRowCord()][nextNode.getColCord()], colors))
+            {
+                Node[][] solution = smartSolve();
+
+                //see if the placement is valid
+                //if (solution != null && constraint.isValid(solution))
+                if (solution != null && constraint.isValid(puzzle))
+                {
+                    //solution found
+                    return solution;
+                }
+            }
+            //reset the placement
+            puzzle[nextNode.getRowCord()][nextNode.getColCord()].setSymbol('_');
+            puzzle[nextNode.getRowCord()][nextNode.getColCord()].setAssigned(false);
+        }
+        return null;*/
+
+        //the puzzle is full
+        if (constraint.isFull(puzzle))
+        {
+            //solution found
+            return puzzle;
+        }
+
+        //retrieve the most constrained Node
         Node nextNode = initial.getNext(puzzle);
+        //Node nextNode = initial.getMCN(puzzle);
 
         //loop through all color choices
         for (Object color : colors)
@@ -97,18 +149,21 @@ public class Backtrack
             array.print(puzzle);
             System.out.println("Current Node: " + puzzle[nextNode.getRowCord()][nextNode.getColCord()]);*/
 
-            //see if the placement is valid
+            //the placement is valid
             if (constraint.isValid(puzzle))
             {
 
-                if(constraint.forwardChecking(puzzle, colors)) {
+                //the placement passes forward checking
+                if(constraint.forwardChecking(puzzle, colors))
+                {
                     smartCount++;
+
+                    //recursive call
                     Node[][] solution = smartSolve();
 
-
-                    //see if the placement is valid
-                    //if (solution != null && constraint.isValid(solution))
-                    if (solution != null && constraint.isValid(puzzle)) {
+                    //the placement is non-null and valid
+                    if (solution != null && constraint.isValid(puzzle))
+                    {
                         //solution found
                         return solution;
                     }
@@ -122,234 +177,20 @@ public class Backtrack
     }
 
     /**
-     * Recursive method to solve the puzzle via backtracking without a heuristic
-     * @param currentNode the Node currently being tested
-     *                    this is the starting Node when first called
+     * Method to return the number of attempted assignments by simple backtracking
+     * @return an integer value
      */
-    public void simpleSolve(Node currentNode)
+    public int getDumbCount()
     {
-        if(isComplete())
-        //loop through color choices
-        for (Object color : colors)
-        {
-            //only check non-assigned Nodes
-            if (!puzzle[currentNode.getRowCord()][currentNode.getColCord()].isAssigned())
-            {
-                //place a color in the current position and print
-                puzzle[currentNode.getRowCord()][currentNode.getColCord()].setSymbol((Character) color);
-                puzzle[currentNode.getRowCord()][currentNode.getColCord()].setAssigned(true);
-                System.out.println();
-                array.print(puzzle);
-                System.out.println("Current Node: " + puzzle[currentNode.getRowCord()][currentNode.getColCord()]);
-
-                //check adjacent node constraint
-                if (constraint.isValid(puzzle))
-                {
-                    //check full constraint
-                    if (constraint.isFull(puzzle))
-                    {
-                        System.exit(0);
-                    }
-                    simpleSolve(currentNode.getNext(puzzle));
-                }
-
-                //recent placement is not valid
-                puzzle[currentNode.getRowCord()][currentNode.getColCord()].setSymbol('_');
-                puzzle[currentNode.getRowCord()][currentNode.getColCord()].setAssigned(false);
-                //System.out.println();
-                //array.print(puzzle);
-            }
-        }
-
-        /*
-        //loop through all possible color choices
-        for (int i = 0; i < colors.length; i++)
-        {
-            //place a color in the current position
-            puzzle[currentNode.getRowCord()][currentNode.getColCord()].setSymbol((Character) colors[i]);
-            //currentNode.setSymbol((Character) colors[i]);
-
-            //print the puzzle
-            System.out.println();
-            array.print(puzzle);
-
-            //print the current node
-            //System.out.println("Current Node: " + currentNode);
-            System.out.println("Current Node: " + puzzle[currentNode.getRowCord()][currentNode.getColCord()]);
-
-            //if recent placement does not violate constraints for the board so far i.e. board does not have to be full
-            if (constraint.checkAdjacent(puzzle, currentNode))
-            {
-                //if the whole board is full and constraints hold for all positions
-                if (constraint.isComplete(puzzle))
-                {
-                    //complete solution
-                    System.out.println("COMPLETE");
-                    System.exit(0);
-                }
-
-                //else if the whole board is not full
-                else
-                {
-                    //make a recursive call with the next position in the puzzle
-                    Node node = currentNode.getNext(puzzle);
-                    simpleSolve(node);
-                }
-            }
-
-            //the recent placement does violate constraints, so remove it
-            puzzle[currentNode.getRowCord()][currentNode.getColCord()].setSymbol('_');
-            currentNode.setSymbol('_');
-        }
-        */
-
-    }
-
-    public Node[][] dumbdumb(){
-        if(isComplete()) return puzzle;
-        Node node = next();
-        char orig = node.getSymbol();
-
-        for(Object color : colors){
-            node.setSymbol((char)color);
-            System.out.println();
-            array.print(puzzle);
-            System.out.println();
-            System.out.println("Current Node: " + puzzle[node.getRowCord()][node.getColCord()]);
-            if(check(puzzle)){
-                puzzle = dumbdumb();
-
-                if (puzzle != null && check(puzzle)){
-                    return puzzle;
-                }
-                //node.setSymbol(orig);
-                node.setSymbol('_');
-            }
-            else{
-                //node.setSymbol(orig);
-                node.setSymbol('_');
-            }
-        }
-        return null;
-    }
-
-    private boolean isComplete(){
-        for(int row = 0; row < this.puzzle.length; row++){
-            for (int col = 0; col < this.puzzle.length; col++){
-                if (this.puzzle[row][col].getSymbol() == '_')
-                    return false;
-            }
-        }
-        return true;
-    }
-
-    private Node next(){
-        for(int row = 0; row < puzzle.length; row++){
-            for (int col = 0; col < puzzle.length; col++){
-                if (puzzle[row][col].getSymbol() == '_')
-                    return puzzle[row][col];
-            }
-        }
-        return null;
-    }
-
-    public boolean check(Node[][] puzzle)
-    {
-        //represents the number of adjacent Nodes of the same color
-        int adjNodes = 0;
-        int adjEmpty = 0;
-        Node node;
-        char color;
-
-        //cells with no unassigned neighbors need to contain at least one neighbor of the same color...
-        for(int row = 0; row < puzzle.length; row++) {
-            for (int col = 0; col < puzzle.length; col++) {
-                node = puzzle[row][col];
-                color = node.getSymbol();
-                if (node.getSymbol() != '_')
-                {
-                    //only check viable Nodes i.e. values within the range of the array
-                    //check North if not on first row
-                    if (node.getRowCord() > 0) {
-                        //only care about Nodes of the same colors
-                        if (puzzle[node.getRowCord() - 1][node.getColCord()].getSymbol() == color) {
-                            //update the number of adjacent Nodes
-                            adjNodes++;
-                        }
-                        if (puzzle[node.getRowCord() - 1][node.getColCord()].getSymbol() == '_') {
-                            //update the number of adjacent Nodes
-                            adjEmpty++;
-                        }
-                    }
-
-                    //check East if not on last column
-                    if (node.getColCord() < puzzle[0].length - 1) {
-                        if (puzzle[node.getRowCord()][node.getColCord() + 1].getSymbol() == color) {
-                            adjNodes++;
-                        }
-                        if (puzzle[node.getRowCord()][node.getColCord() + 1].getSymbol() == '_') {
-                            adjEmpty++;
-                        }
-                    }
-
-                    //check South if not on last row
-                    if (node.getRowCord() < puzzle.length - 1) {
-                        if (puzzle[node.getRowCord() + 1][node.getColCord()].getSymbol() == color) {
-                            adjNodes++;
-                        }
-                        if (puzzle[node.getRowCord() + 1][node.getColCord()].getSymbol() == '_') {
-                            adjEmpty++;
-                        }
-                    }
-
-                    //check West
-                    if (node.getColCord() > 0) {
-                        if (puzzle[node.getRowCord()][node.getColCord() - 1].getSymbol() == color) {
-                            adjNodes++;
-                        }
-                        if (puzzle[node.getRowCord()][node.getColCord() - 1].getSymbol() == '_') {
-                            adjEmpty++;
-                        }
-                    }
-
-                    if(adjNodes > 2) return false;
-
-                    if(adjEmpty == 0) {
-                        if (adjNodes == 0)
-                            return false;
-
-                        //the Node is not a dot
-                        if (!node.isDot()) {
-                            //number of adjacent nodes to a newly filled-in cell must be at least one, not greater than 2
-                            //if (adjNodes < 1 || adjNodes > 2)
-                            if (adjNodes != 2)
-                            //if (adjNodes > 2)
-                            {
-                                return false;
-                            }
-                        }
-
-                        //the Node is a dot
-                        else if (node.isDot()) {
-                            //number of adjacent nodes to a dot must be exactly one
-                            //if (adjNodes > 1)
-                            if (adjNodes != 1)
-                            {
-                                return false;
-                            }
-                        }
-                    }
-                }
-            }
-        }
-        return true;
-    }
-
-    public int getDumbCount(){
         return dumbCount;
     }
 
-    public int getSmartCount(){
+    /**
+     * Method to return the number of attempted assignments by advanced backtracking
+     * @return an integer value
+     */
+    public int getSmartCount()
+    {
         return smartCount;
     }
 }
