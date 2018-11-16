@@ -20,7 +20,7 @@ public class Driver {
         try
         {
             //opens the file
-            Scanner fileRead = new Scanner(new FileReader("12x12maze.txt"));
+            Scanner fileRead = new Scanner(new FileReader("10x10maze.txt"));
 
             //counter to represent the inner array list
             int i = 0;
