@@ -101,7 +101,6 @@ public class Driver {
         solvedPuzzle = backtrack.dumbSolve();
         elapsedTime = (System.nanoTime()-startTime)/1000000;
         System.out.println("\nSolved " + fileName + " using dumbSolve in " + elapsedTime + " milliseconds, " + backtrack.getDumbCount() + " placements attempted");
-        array.print(solvedPuzzle);
 
         //solve the same puzzle using advanced backtracking and print out the solution
         originalPuzzle = array.convert(puzzle);
@@ -110,8 +109,9 @@ public class Driver {
         solvedPuzzle = backtrack.smartSolve();
         elapsedTime = (System.nanoTime()-startTime)/1000000;
         System.out.println("\nSolved " + fileName + " using smartSolve in " + elapsedTime + " milliseconds, " + backtrack.getSmartCount() + " placements attempted");
-        array.print(solvedPuzzle);
 
+        System.out.println("\nSolved Puzzle");
+        array.print(solvedPuzzle);
 
         /* TESTING */
         //Node start = array.findStart(openPuzzle);
