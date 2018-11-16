@@ -99,7 +99,7 @@ public class Node
                     }
                 }
 
-                if(constraints == 3){
+                if(constraints == 4){
                     return node;
                 }
                 if(constraints > maxConstraints){
