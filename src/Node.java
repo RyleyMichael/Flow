@@ -1,5 +1,5 @@
 /**
- * Class to represent a given space on the puzzle
+ * Class to represent a given position in the puzzle
  */
 
 public class Node
@@ -21,11 +21,19 @@ public class Node
         this.symbol = symbol;
     }
 
+    /**
+     * Method to return whether or not a Node is assigned
+     * @return boolean value, true for assigned, false for not assigned
+     */
     public boolean isAssigned()
     {
         return assigned;
     }
 
+    /**
+     * Method to set the assign value of a Node
+     * @param assigned boolean value
+     */
     public void setAssigned(boolean assigned)
     {
         this.assigned = assigned;
@@ -33,7 +41,7 @@ public class Node
 
     /**
      * Method to get the next Node to be tested
-     * @param puzzle
+     * @param puzzle a 2d Node array representing the Flow puzzle
      * @return the next Node that is not a dot
      *          'next' in this case means moving East
      */
@@ -41,30 +49,75 @@ public class Node
     {
         //loop through the rows
         for (int row = 0; row < puzzle.length; row++)
-        //loop through the columns
-        //for (int col = 0; col < puzzle[0].length; col++)
         {
             //loop through the columns
             for (int col = 0; col < puzzle[row].length; col++)
-            //loop through the rows
-            //for (int row = 0; row < puzzle.length; row++)
             {
                 if (!puzzle[row][col].isAssigned())
                 {
                     return puzzle[row][col];
                 }
-                /*//skip dots and Nodes that are filled in
-                if (!puzzle[row][col].isDot() && puzzle[row][col].getSymbol() == '_')
-                {
-                    //skip the current Node
-                    if (!this.isEqual(puzzle[row][col]))
-                    {
-                        return puzzle[row][col];
-                    }
-                }*/
             }
         }
         return this;
+    }
+
+    public Node getMostConstrained(Node[][] puzzle, Object[] colors)
+    {
+        //set the initial conditions
+        Node mostConstrainedNode = null;
+        int mostConstrainedVal = Integer.MIN_VALUE;
+
+        //loop through the rows
+        for (int row = 0; row < puzzle.length; row++)
+        {
+            //loop through the columns
+            for (int col = 0; col < puzzle[row].length; col++)
+            {
+                //skip Nodes that have been filled
+                if (puzzle[row][col].getSymbol() == '_')
+                //if (!puzzle[row][col].isAssigned())
+                {
+                    //get the constraint value of the current Node
+                    int currentConstraintVal = getConstraintVal(puzzle, puzzle[row][col], colors);
+
+                    //set the new most constrained Node
+                    if (currentConstraintVal > mostConstrainedVal)
+                    {
+                        mostConstrainedNode = puzzle[row][col];
+                        mostConstrainedVal = currentConstraintVal;
+                    }
+                }
+            }
+        }
+        return mostConstrainedNode;
+    }
+
+    public int getConstraintVal(Node[][] puzzle, Node node, Object[] colors)
+    {
+        //set the initial conditions
+        int validColors = 0;
+        char originalColor = node.getSymbol();
+        Constraint constraint = new Constraint();
+
+        //check all colors
+        for (Object color : colors)
+        {
+            //try a color at the current position and mark it assigned
+            puzzle[node.getRowCord()][node.getColCord()].setSymbol((Character) color);
+            //puzzle[node.getRowCord()][node.getColCord()].setAssigned(true);
+
+            //see if the placement is valid
+            if (constraint.isValid(puzzle))
+            {
+                //update the number of valid colors
+                validColors++;
+            }
+            //reset the color
+            puzzle[node.getRowCord()][node.getColCord()].setSymbol(originalColor);
+            //puzzle[node.getRowCord()][node.getColCord()].setAssigned(true);
+        }
+        return validColors;
     }
 
     public Node getMCN(Node[][] puzzle){
@@ -112,26 +165,8 @@ public class Node
     }
 
     /**
-     * Method to determine if two Nodes are the same
-     * @param node the Node to be checked against 'this'
-     * @return a boolean value representing if the Nodes are equal
-     */
-    public boolean isEqual(Node node)
-    {
-        //the row coordinate is the same
-        if (this.getRowCord() == node.getRowCord())
-        {
-            //the column coordinate is the same
-            if (this.getColCord() == node.getColCord())
-            {
-                return true;
-            }
-        }
-        return false;
-    }
-
-    /**
      * Method to print a given Node instance
+     * (row coordinate, column coordinate) color
      */
     @Override
     public String toString()
@@ -140,8 +175,8 @@ public class Node
     }
 
     /**
-     * Method to set the symbol of a Node
-     * @param symbol the symbol as a character
+     * Method to set the symbol of a Node and mark it assigned
+     * @param symbol char value
      */
     public void setSymbol(char symbol)
     {
@@ -151,7 +186,7 @@ public class Node
 
     /**
      * Method to return the symbol of a Node
-     * @return the symbol as a character
+     * @return char value
      */
     public char getSymbol()
     {
@@ -169,7 +204,7 @@ public class Node
 
     /**
      * Method to return the row coordinate of a Node
-     * @return the coordinate as an integer
+     * @return int value
      */
     public int getRowCord()
     {
@@ -187,7 +222,7 @@ public class Node
 
     /**
      * Method to return the column coordinate of a Node
-     * @return the coordinate as an integer
+     * @return int value
      */
     public int getColCord()
     {
@@ -205,7 +240,7 @@ public class Node
 
     /**
      * Method to determine if a Node is a dot
-     * @return
+     * @return boolean value
      */
     public boolean isDot()
     {

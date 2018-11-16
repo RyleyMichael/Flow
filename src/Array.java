@@ -5,9 +5,8 @@
 //imports
 import java.util.ArrayList;
 
-public class Array {
-
-    //instance variables
+public class Array
+{
 
     /**
      * Constructor
@@ -19,8 +18,8 @@ public class Array {
 
     /**
      * Method to find the different colors that are present in the puzzle
-     * @param puzzle the original flow grid
-     * @return the different colors as a character array
+     * @param puzzle 2d Node representation of the Flow puzzle
+     * @return the different colors as an Object array
      */
     public Object[] getColors(Node[][] puzzle)
     {
@@ -39,8 +38,7 @@ public class Array {
                 }
             }
         }
-
-         return colorList.toArray();
+        return colorList.toArray();
     }
 
     /**
@@ -58,6 +56,7 @@ public class Array {
 
     /**
      * Method to find all the dots i.e. starting/ending points in the maze
+     * This method is mainly for testing
      * @param puzzle the original flow grid
      */
     public void printDots(Node[][] puzzle)
