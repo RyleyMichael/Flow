@@ -12,6 +12,8 @@ public class Backtrack
     private Constraint constraint;
     private Array array;
     private Node initial;
+    private int dumbCount;
+    private int smartCount;
 
     /**
      * Constructor
@@ -23,6 +25,8 @@ public class Backtrack
         constraint = new Constraint();
         array = new Array();
         initial = puzzle[0][0];
+        dumbCount = 0;
+        smartCount = 0;
     }
 
     public Node[][] dumbSolve()
@@ -52,6 +56,7 @@ public class Backtrack
             //see if the placement is valid
             if (constraint.isValid(puzzle))
             {
+                dumbCount++;
                 Node[][] solution = dumbSolve();
 
                 //see if the placement is valid
@@ -78,7 +83,7 @@ public class Backtrack
             return puzzle;
         }
 
-        Node nextNode = initial.getMCN(puzzle);
+        Node nextNode = initial.getNext(puzzle);
 
         //loop through all color choices
         for (Object color : colors)
@@ -97,7 +102,8 @@ public class Backtrack
             {
 
                 if(constraint.forwardChecking(puzzle, colors)) {
-                    Node[][] solution = dumbSolve();
+                    smartCount++;
+                    Node[][] solution = smartSolve();
 
 
                     //see if the placement is valid
@@ -337,5 +343,13 @@ public class Backtrack
             }
         }
         return true;
+    }
+
+    public int getDumbCount(){
+        return dumbCount;
+    }
+
+    public int getSmartCount(){
+        return smartCount;
     }
 }

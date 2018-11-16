@@ -10,7 +10,6 @@
 import java.util.ArrayList;
 import java.util.Scanner;
 import java.io.FileReader;
-import java.util.concurrent.TimeUnit;
 
 
 public class Driver {
@@ -67,7 +66,7 @@ public class Driver {
         startTime = System.nanoTime();
         solvedPuzzle =  backtrack.dumbSolve();
         elapsedTime = (System.nanoTime()-startTime)/1000000;
-        System.out.println("\nSolved 5x5 using dumbSolve in " + elapsedTime + "milliseconds");
+        System.out.println("\nSolved 5x5 using dumbSolve in " + elapsedTime + " milliseconds, " + backtrack.getDumbCount() + " placements attempted");
         array.print(solvedPuzzle);
 
         System.out.println();
@@ -77,7 +76,7 @@ public class Driver {
         startTime = System.nanoTime();
         solvedPuzzle =  backtrack.smartSolve();
         elapsedTime = (System.nanoTime()-startTime)/1000000;
-        System.out.println("\nSolved 5x5 using smartSolve in " + elapsedTime + "milliseconds");
+        System.out.println("\nSolved 5x5 using smartSolve in " + elapsedTime + " milliseconds, " + backtrack.getSmartCount() + " placements attempted");
         array.print(solvedPuzzle);
 
         //////////////////////////////////////////////////////////////////
@@ -125,7 +124,7 @@ public class Driver {
         startTime = System.nanoTime();
         solvedPuzzle =  backtrack.dumbSolve();
         elapsedTime = (System.nanoTime()-startTime)/1000000;
-        System.out.println("\nSolved 7x7 using dumbSolve in " + elapsedTime + "milliseconds");
+        System.out.println("\nSolved 7x7 using dumbSolve in " + elapsedTime + " milliseconds, " + backtrack.getDumbCount() + " placements attempted");
         array.print(solvedPuzzle);
 
         System.out.println();
@@ -135,7 +134,7 @@ public class Driver {
         startTime = System.nanoTime();
         solvedPuzzle =  backtrack.smartSolve();
         elapsedTime = (System.nanoTime()-startTime)/1000000;
-        System.out.println("\nSolved 7x7 using smartSolve in " + elapsedTime + "milliseconds");
+        System.out.println("\nSolved 7x7 using smartSolve in " + elapsedTime + " milliseconds, " + backtrack.getSmartCount() + " placements attempted");
         array.print(solvedPuzzle);
 
         /////////////////////////////////////////////////////////////////
@@ -183,7 +182,7 @@ public class Driver {
         startTime = System.nanoTime();
         solvedPuzzle =  backtrack.dumbSolve();
         elapsedTime = (System.nanoTime()-startTime)/1000000;
-        System.out.println("\nSolved 8x8 using dumbSolve in " + elapsedTime + "milliseconds");
+        System.out.println("\nSolved 8x8 using dumbSolve in " + elapsedTime + " milliseconds, " + backtrack.getDumbCount() + " placements attempted");
         array.print(solvedPuzzle);
 
         System.out.println();
@@ -193,7 +192,7 @@ public class Driver {
         startTime = System.nanoTime();
         solvedPuzzle =  backtrack.smartSolve();
         elapsedTime = (System.nanoTime()-startTime)/1000000;
-        System.out.println("\nSolved 8x8 using smartSolve in " + elapsedTime + "milliseconds");
+        System.out.println("\nSolved 8x8 using smartSolve in " + elapsedTime + " milliseconds, " + backtrack.getSmartCount() + " placements attempted");
         array.print(solvedPuzzle);
 
         ///////////////////////////////////////////////////////////////////
@@ -241,7 +240,7 @@ public class Driver {
         startTime = System.nanoTime();
         solvedPuzzle =  backtrack.dumbSolve();
         elapsedTime = (System.nanoTime()-startTime)/1000000;
-        System.out.println("\nSolved 9x9 using dumbSolve in " + elapsedTime + "milliseconds");
+        System.out.println("\nSolved 9x9 using dumbSolve in " + elapsedTime + " milliseconds, " + backtrack.getDumbCount() + " placements attempted");
         array.print(solvedPuzzle);
 
         System.out.println();
@@ -251,7 +250,7 @@ public class Driver {
         startTime = System.nanoTime();
         solvedPuzzle =  backtrack.smartSolve();
         elapsedTime = (System.nanoTime()-startTime)/1000000;
-        System.out.println("\nSolved 9x9 using smartSolve in " + elapsedTime + "milliseconds");
+        System.out.println("\nSolved 9x9 using smartSolve in " + elapsedTime + " milliseconds, " + backtrack.getSmartCount() + " placements attempted");
         array.print(solvedPuzzle);
 
         ////////////////////////////////////////////////////////////////////
@@ -299,7 +298,7 @@ public class Driver {
         startTime = System.nanoTime();
         solvedPuzzle =  backtrack.dumbSolve();
         elapsedTime = (System.nanoTime()-startTime)/1000000;
-        System.out.println("\nSolved 10x10 using dumbSolve in " + elapsedTime + "milliseconds");
+        System.out.println("\nSolved 10x10 using dumbSolve in " + elapsedTime + " milliseconds, " + backtrack.getDumbCount() + " placements attempted");
         array.print(solvedPuzzle);
 
         System.out.println();
@@ -309,7 +308,7 @@ public class Driver {
         startTime = System.nanoTime();
         solvedPuzzle =  backtrack.smartSolve();
         elapsedTime = (System.nanoTime()-startTime)/1000000;
-        System.out.println("\nSolved 10x10 using smartSolve in " + elapsedTime + "milliseconds");
+        System.out.println("\nSolved 10x10 using smartSolve in " + elapsedTime + " milliseconds, " + backtrack.getSmartCount() + " placements attempted");
         array.print(solvedPuzzle);
 
         //////////////////////////////////////////////////////////////////
@@ -357,7 +356,7 @@ public class Driver {
         startTime = System.nanoTime();
         solvedPuzzle =  backtrack.dumbSolve();
         elapsedTime = (System.nanoTime()-startTime)/1000000;
-        System.out.println("\nSolved 12x12 using dumbSolve in " + elapsedTime + "milliseconds");
+        System.out.println("\nSolved 12x12 using dumbSolve in " + elapsedTime + " milliseconds, " + backtrack.getDumbCount() + " placements attempted");
         array.print(solvedPuzzle);
 
         System.out.println();
@@ -367,7 +366,7 @@ public class Driver {
         startTime = System.nanoTime();
         solvedPuzzle =  backtrack.smartSolve();
         elapsedTime = (System.nanoTime()-startTime)/1000000;
-        System.out.println("\nSolved 12x12 using smartSolve in " + elapsedTime + "milliseconds");
+        System.out.println("\nSolved 12x12 using smartSolve in " + elapsedTime + " milliseconds, " + backtrack.getSmartCount() + " placements attempted");
         array.print(solvedPuzzle);
 
 
